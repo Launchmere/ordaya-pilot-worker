@@ -1,0 +1,31 @@
+self.ORDAYA_PRECACHE = {
+  "version": "4c19a79e1ab511ab7a391810",
+  "urls": [
+    "https://cdn.jsdelivr.net/npm/@supabase/auth-js@2.95.0/+esm",
+    "https://cdn.jsdelivr.net/npm/@supabase/functions-js@2.95.0/+esm",
+    "https://cdn.jsdelivr.net/npm/@supabase/postgrest-js@2.95.0/+esm",
+    "https://cdn.jsdelivr.net/npm/@supabase/realtime-js@2.95.0/+esm",
+    "https://cdn.jsdelivr.net/npm/@supabase/storage-js@2.95.0/+esm",
+    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0/+esm",
+    "https://cdn.jsdelivr.net/npm/iceberg-js@0.8.1/+esm",
+    "https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/account-address.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/brand.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/commercial-auth.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/config.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/invite-accept.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/language-forms.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/languages.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/ordaya-lockup-reverse-lm3.svg",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/password-visibility.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/referral-offer.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/referral.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/sfbb-guidance.mjs",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/sfbb.css",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/stage1-entry.js",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/stage1-standard.css",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/workspace-bundle.js",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/assets/workspace-stage1-standard.js",
+    "https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/bootstrap.mjs"
+  ]
+};

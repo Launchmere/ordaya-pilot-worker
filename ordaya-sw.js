@@ -1,28 +1,50 @@
-// Host on www.launchmere.com only after approval. Cache public shell bytes only.
-const CACHE='ordaya-standard-shell-v1';
-const BASE='https://gwsgdghknbqcfvkojtuw.supabase.co/functions/v1/ordaya-commercial-assets/';
-const assets=new Set(['bootstrap.mjs','assets/workspace-bundle.js','assets/stage1-entry.js','assets/stage1-standard.css','assets/workspace-stage1-standard.js','assets/commercial-auth.mjs']);
-function standard(url){
- return url.origin===self.location.origin&&url.pathname==='/ordaya'&&
-  url.searchParams.getAll('app').join(',')==='1'&&url.searchParams.getAll('pilot').join(',')==='1'&&
-  [...url.searchParams.keys()].every(key=>['app','pilot'].includes(key));
+importScripts('./precache.js');
+const {urls, version} = self.ORDAYA_PRECACHE;
+const cacheName = 'ordaya-standard-shell-' + version;
+const assets = new Set(urls);
+const entry = urls.find(url => url.endsWith('/workspace-bundle.js'));
+
+
+function isPilot(url) {
+  return url.origin === self.location.origin && url.pathname === '/ordaya' &&
+    url.searchParams.size === 2 && url.searchParams.get('app') === '1' &&
+    url.searchParams.get('pilot') === '1';
 }
-self.addEventListener('fetch',event=>{
- const req=event.request,url=new URL(req.url);
- if(req.method!=='GET'||req.headers.has('Authorization'))return;
- const navigation=req.mode==='navigate'&&standard(url);
- const asset=url.href.startsWith(BASE)&&assets.has((url.origin+url.pathname).slice(BASE.length));
- if(!navigation&&!asset)return;
- event.respondWith((async()=>{
-  if(asset){
-   const client=event.clientId&&await self.clients.get(event.clientId);
-   if(!client||!standard(new URL(client.url)))return fetch(req);
+
+self.addEventListener('install', event => {
+  event.waitUntil((async () => {
+    const cache = await caches.open(cacheName);
+    // addAll commits atomically. A missing dependency leaves the previous worker active.
+    await cache.addAll(urls.map(url => new Request(url, {credentials: 'omit', cache: 'reload', redirect: 'error'})));
+    await self.skipWaiting();
+  })());
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', event => {
+  const req = event.request;
+  if (req.method !== 'GET' || req.headers.has('Authorization')) return;
+  const url = new URL(req.url);
+  if (req.mode === 'navigate' && isPilot(url)) {
+    event.respondWith(fetch(req).catch(() => new Response(
+      '<!doctype html><html lang="en-GB"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ordaya | Offline workspace</title><main id="app"><h1>Ordaya</h1><p>Opening your offline workspace…</p></main><dialog id="dialog"></dialog><div id="toast" role="status"></div><script type="module" src="' + entry + '"></script></html>',
+      {headers: {'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'}}
+    )));
+    return;
   }
-  const cache=await caches.open(CACHE);
-  try{
-   const response=await fetch(req);
-   if(response.ok&&!response.redirected&&!/private|no-store/i.test(response.headers.get('cache-control')||''))await cache.put(req,response.clone());
-   return response;
-  }catch(error){const stored=await cache.match(req);if(stored)return stored;throw error;}
- })());
+  const key = url.origin + url.pathname;
+  if (!assets.has(key)) return;
+  event.respondWith((async () => {
+    const client = event.clientId && await self.clients.get(event.clientId);
+    if (!client || !isPilot(new URL(client.url))) return fetch(req);
+    try { return await fetch(req); }
+    catch (error) {
+      const saved = await (await caches.open(cacheName)).match(key);
+      if (saved) return saved;
+      throw error;
+    }
+  })());
 });
