@@ -1,4 +1,4 @@
-/ordaya-sw.js
+/ordaya-worker/ordaya-sw.js
   Service-Worker-Allowed: /ordaya
   Content-Type: application/javascript
   Cache-Control: no-cache
