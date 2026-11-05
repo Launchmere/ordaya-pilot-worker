@@ -1,5 +1,5 @@
 self.ORDAYA_PRECACHE = {
-  "version": "703fdb2afa33190c6347dbf1",
+  "version": "60bd73f5aa8e6710c8811a67",
   "urls": [
     "https://cdn.jsdelivr.net/npm/@supabase/auth-js@2.95.0/+esm",
     "https://cdn.jsdelivr.net/npm/@supabase/functions-js@2.95.0/+esm",
